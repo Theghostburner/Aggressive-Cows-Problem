@@ -1,0 +1,66 @@
+#include<bits/stdc++.h>
+using namespace std;
+bool checker(long long d,long long* p,long long n,long long c)
+{
+    int next =1;
+    int prev =0;
+    int count =1;
+    
+    while((next<(n))&&(count<c))
+    {
+        if((p[next]-p[prev])>=d)
+        {
+            count++;
+            prev = next;
+            next+=1;
+        }
+        else
+        {
+            next+=1;
+        }
+        
+    }
+    if(count<c)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+int main() {
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        long long n,c;
+        cin>>n>>c;
+        long long* p = new long long[n];
+        for(int i=0;i<n;i++)
+        {
+            cin>>p[i];
+        }
+        
+    	sort(p,p+n);
+    	long long maxDist = p[n-1]-p[0];
+    	long long minDist = 0;
+    	long long answer = -1;
+        while(maxDist>=minDist)
+        {
+            long long mid = minDist+(maxDist-minDist)/2;
+            if(checker(mid,p,n,c))
+            {
+                answer = mid;
+                minDist = mid+1;
+            }
+            else
+            {
+                maxDist = (mid-1);
+            }
+        }
+        cout<<answer<<endl;
+    }
+
+	
+}
